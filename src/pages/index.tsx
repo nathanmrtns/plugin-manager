@@ -1,8 +1,5 @@
-import Head from 'next/head'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Main.module.css'
-
-const inter = Inter({ subsets: ['latin'] })
+import Head from "next/head";
+import styles from "@/styles/Main.module.css";
 
 export default function Main() {
   return (
@@ -12,9 +9,7 @@ export default function Main() {
         <meta name="description" content="Plugin Manager" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <main className={`${styles.main} ${inter.className}`}>
-        Lets manage some plugins
-      </main>
+      <main className={styles.main}>Lets manage some plugins</main>
     </>
-  )
+  );
 }

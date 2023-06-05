@@ -1,9 +1,12 @@
+import { Inter } from 'next/font/google'
 import styles from '@/styles/Layout.module.css'
-import Sidebar from '@/components/sidebar';
+import Sidebar from '@/components/Sidebar';
+
+const inter = Inter({ subsets: ['latin'] })
 
 export default function Layout({ children } : { children : any}) {
   return (
-    <main className={`${styles.layoutWrapper}`}>
+    <main className={`${styles.layoutWrapper} ${inter.className}`}>
       <div className={`${styles.sidebar}`}>
         <Sidebar />
       </div>

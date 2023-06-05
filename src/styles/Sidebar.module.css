@@ -1,0 +1,34 @@
+.sidebar {
+  color: #003349;
+}
+
+.sidebarLogo {
+  padding-left: 25px;
+  height: 100px;
+  width: 100%;
+  display: flex;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
+.sidebarItem,
+.sidebarItem:visited {
+  color: #003349;
+  background-color: #f1f1f1;
+  display: flex;
+  align-items: center;
+  height: 50px;
+  line-height: 50px;
+  padding-left: 25px;
+  text-decoration: none;
+}
+
+.sidebarItem > span {
+  padding-left: 10px;
+}
+
+.itemActive {
+  background-color: white;
+  border-left: solid 5px #c62f40;
+  padding-left: 20px;
+}
