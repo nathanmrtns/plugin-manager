@@ -1,0 +1,13 @@
+.layoutWrapper {
+  display:flex;
+}
+
+.sidebar {
+  flex: 2;
+  background-color: grey;
+}
+
+.page {
+  flex: 8;
+  background-color: bisque;
+}
