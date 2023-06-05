@@ -1,7 +1,7 @@
 import Head from "next/head";
 import styles from "@/styles/Main.module.css";
 
-export default function Main() {
+export default function Marketing() {
   return (
     <>
       <Head>
