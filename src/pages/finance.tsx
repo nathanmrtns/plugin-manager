@@ -11,6 +11,7 @@ export default function Finance() {
     <main className={styles.main}>
       <div>
         <PluginsList
+          tab="tab2"
           title="Finance Plugins"
           active={marketingTabData.active}
           inactive={marketingTabData.inactive}

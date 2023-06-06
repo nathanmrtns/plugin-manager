@@ -18,6 +18,7 @@ export default function Marketing() {
       <main className={styles.main}>
         <div>
           <PluginsList
+            tab="tab1"
             title="Marketing Plugins"
             active={marketingTabData.active}
             inactive={marketingTabData.inactive}

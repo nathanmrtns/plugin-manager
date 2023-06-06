@@ -11,6 +11,7 @@ export default function Personnel() {
     <main className={styles.main}>
       <div>
         <PluginsList
+          tab="tab3"
           title="Personnel Plugins"
           active={marketingTabData.active}
           inactive={marketingTabData.inactive}

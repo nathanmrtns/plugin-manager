@@ -1,9 +1,16 @@
 "use client";
 
-import React, { useContext, Dispatch, createContext, useReducer } from "react";
+import React, {
+  useCallback,
+  useContext,
+  Dispatch,
+  createContext,
+  useReducer,
+} from "react";
 
 type ActionType = {
   type: string;
+  payload: { tab: string; plugin: string };
 };
 
 type TabData = {
@@ -13,13 +20,6 @@ type TabData = {
   disabled: string[];
   inactive: string[];
 };
-
-interface ContextProps {
-  plugins: { [key: string]: any };
-  tabs: string[];
-  tabdata: { [key: string]: TabData };
-  getTabData: (tab: "tab1" | "tab2" | "tab3") => TabData;
-}
 
 const DEFAULT_DATA = {
   data: {
@@ -112,13 +112,21 @@ const DEFAULT_DATA = {
   errors: null,
 };
 
-const reducer = (state: any, action: ActionType) => {
-  switch (action.type) {
+const reducer = (state: any, { type, payload }: ActionType) => {
+  let tabDataCopy = { ...state.tabdata };
+  switch (type) {
     case "DEACTIVATE":
-      console.log(state);
-      return state;
+      tabDataCopy[payload.tab].active = tabDataCopy[payload.tab].active.filter(
+        (plugin: any) => plugin !== payload.plugin
+      );
+      tabDataCopy[payload.tab].inactive.push(payload.plugin);
+      return { ...state, tabdata: tabDataCopy };
     case "ACTIVATE":
-      return state;
+      tabDataCopy[payload.tab].inactive = tabDataCopy[
+        payload.tab
+      ].inactive.filter((plugin: any) => plugin !== payload.plugin);
+      tabDataCopy[payload.tab].active.push(payload.plugin);
+      return { ...state, tabdata: tabDataCopy };
     default:
       return state;
   }
@@ -130,7 +138,8 @@ const GlobalContext = createContext<{
 }>({ state: DEFAULT_DATA.data, dispatch: () => null });
 
 export const GlobalContextProvider = ({ children }: { children: any }) => {
-  const [state, dispatch] = useReducer(reducer, DEFAULT_DATA.data);
+  const memoizedReducer = useCallback(reducer, []);
+  const [state, dispatch] = useReducer(memoizedReducer, DEFAULT_DATA.data);
 
   return (
     <GlobalContext.Provider value={{ state, dispatch }}>

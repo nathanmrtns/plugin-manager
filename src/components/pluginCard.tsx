@@ -1,15 +1,31 @@
 import styles from "@/styles/Plugins.module.css";
 import Switch from "@/components/switch";
+import { useGlobalContext } from "@/context/global";
+import { useCallback } from "react";
 
 export function PluginCard({
-  plugin,
+  tab,
+  pluginKey,
   isActive,
   isDisabled,
 }: {
-  plugin: any;
+  tab: string;
+  pluginKey: string;
   isActive: boolean;
   isDisabled: boolean;
 }) {
+  const { state, dispatch } = useGlobalContext();
+  const { plugins } = state;
+
+  const handleChange = useCallback(() => {
+    dispatch({
+      type: isActive ? "DEACTIVATE" : "ACTIVATE",
+      payload: { tab: tab, plugin: pluginKey },
+    });
+  }, [dispatch, isActive, tab, pluginKey]);
+
+  const plugin = plugins[pluginKey];
+
   return (
     <div
       className={`${styles.pluginCard}  ${
@@ -23,10 +39,7 @@ export function PluginCard({
         </span>
       </div>
       <div>
-        <Switch
-          checked={isActive}
-          onChange={() => console.log("Implement change")}
-        />
+        <Switch checked={isActive} onClick={handleChange} />
       </div>
     </div>
   );

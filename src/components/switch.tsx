@@ -2,10 +2,10 @@ import styles from "@/styles/Switch.module.css";
 
 export default function Switch({
   checked,
-  onChange,
+  onClick,
 }: {
   checked: boolean;
-  onChange: () => void;
+  onClick: () => void;
 }) {
   return (
     <label className={styles.toggle}>
@@ -13,7 +13,8 @@ export default function Switch({
         className={styles.toggleCheckbox}
         type="checkbox"
         checked={checked}
-        onChange={onChange}
+        onClick={onClick}
+        readOnly
       />
       <div className={styles.toggleSwitch}></div>
       <span
