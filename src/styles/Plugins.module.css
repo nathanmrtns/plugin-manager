@@ -19,7 +19,7 @@
   margin-right: 30px;
   margin-bottom: 30px;
   display: flex;
-  color: #003349;
+  color: var(--dark-blue);
 }
 
 .pluginCardDisabled * {

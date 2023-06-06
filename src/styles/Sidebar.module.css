@@ -1,5 +1,5 @@
 .sidebar {
-  color: #003349;
+  color: (--darkblue);
 }
 
 .sidebarLogo {
@@ -29,6 +29,6 @@
 
 .itemActive {
   background-color: white;
-  border-left: solid 5px #c62f40;
+  border-left: solid 5px var(--wine-red);
   padding-left: 20px;
 }

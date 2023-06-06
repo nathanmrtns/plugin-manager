@@ -1,5 +1,5 @@
 .layoutWrapper {
-  display:flex;
+  display: flex;
 }
 
 .sidebar {
@@ -9,5 +9,5 @@
 
 .page {
   flex: 8;
-  background-color: ffffff;
+  background-color: #ffffff;
 }
