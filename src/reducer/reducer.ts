@@ -94,6 +94,15 @@ export const DEFAULT_DATA = {
   errors: null,
 };
 
+/**
+ * Fetch mocks to the API could be added here with more time.
+ * //TODO: post on api/tabs/[id]/activate_plugins/
+ * //TODO: post on api/tabs/[id]/deactivate_plugins/
+ * //TODO: post on api/tabs/[id]/disable_plugins/
+ *
+ * //TODO: DISABLE action
+ * The body for the posts being: {plugins: [plugin1, plugins2...]}
+ * */
 export const reducer = (state: any, { type, payload }: ActionType) => {
   let tabDataCopy = { ...state.tabdata };
   switch (type) {
