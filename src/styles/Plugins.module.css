@@ -1,0 +1,44 @@
+.title {
+  font-size: 16px;
+  margin-bottom: 15px;
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+
+.pluginsList {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.pluginCard {
+  width: 260px;
+  height: 170px;
+  border: solid 2px #dcdcdc;
+  border-radius: 10px;
+  padding: 20px;
+  margin-right: 30px;
+  margin-bottom: 30px;
+  display: flex;
+  color: #003349;
+}
+
+.pluginCardDisabled * {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: default;
+}
+
+.pluginCardTitle {
+  font-size: 16px;
+  margin-bottom: 20px;
+  font-weight: normal;
+}
+
+.pluginCardDescription {
+  font-size: 12px;
+  color: #a2aeb6;
+}
+
+.infoWrapper {
+  margin-right: 10px;
+}
