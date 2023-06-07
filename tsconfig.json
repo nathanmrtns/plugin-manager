@@ -18,6 +18,14 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/pages/api/tabs/index.js",
+    "src/pages/api/tabs/[tab_id]/plugins/index.js",
+    "src/pages/api/tabs/[tab_id]/plugins/[plugin_id]/deactivate.js",
+    "src/pages/api/tabs/[tab_id]/plugins/[plugin_id]/activate.js"
+  ],
   "exclude": ["node_modules"]
 }

@@ -17,12 +17,23 @@ export function PluginCard({
   const { state, dispatch } = useGlobalContext();
   const { plugins } = state;
 
+  const toggleSwitch = useCallback(
+    async (isActive: boolean) => {
+      let url = `api/tabs/${tab}/plugins/${pluginKey}/`;
+      if (isActive) url = url + "deactivate";
+      else {
+        url = url + "activate";
+      }
+      const response = await fetch(url, { method: "POST" });
+      const data = await response.json();
+      dispatch({ type: "SET_UPDATED_DATA", payload: data });
+    },
+    [dispatch, pluginKey, tab]
+  );
+
   const handleChange = useCallback(() => {
-    dispatch({
-      type: isActive ? "DEACTIVATE" : "ACTIVATE",
-      payload: { tab: tab, plugin: pluginKey },
-    });
-  }, [dispatch, isActive, tab, pluginKey]);
+    toggleSwitch(isActive);
+  }, [toggleSwitch, isActive]);
 
   const plugin = plugins[pluginKey];
 

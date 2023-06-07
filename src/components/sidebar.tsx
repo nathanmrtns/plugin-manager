@@ -7,6 +7,8 @@ import MarketingIcon from "@/components/icons/Marketing";
 import PersonnelIcon from "@/components/icons/Personnel";
 import FinanceIcon from "@/components/icons/Finance";
 import { useGlobalContext } from "@/context/global";
+import { useCallback, useEffect, useState } from "react";
+import { Loader } from "./loader";
 
 function SidebarItem({
   title,
@@ -65,12 +67,27 @@ function SidebarItemList() {
 }
 
 export default function Sidebar() {
+  const { dispatch } = useGlobalContext();
+  const [loading, setLoading] = useState(true);
+
+  const fetchTabs = useCallback(async () => {
+    setLoading(true);
+    const response = await fetch("/api/tabs");
+    const data = await response.json();
+    dispatch({ type: "SET_TABS", payload: data });
+    setLoading(false);
+  }, [dispatch]);
+
+  useEffect(() => {
+    fetchTabs();
+  }, [fetchTabs]);
+
   return (
     <div className={styles.sidebar}>
       <div className={styles.sidebarLogo}>
         <DataGuardLogo />
       </div>
-      <SidebarItemList />
+      {loading ? <Loader /> : <SidebarItemList />}
     </div>
   );
 }
