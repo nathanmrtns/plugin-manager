@@ -4,12 +4,12 @@ import { useGlobalContext } from "@/context/global";
 import { useCallback } from "react";
 
 export function PluginCard({
-  tab,
+  tabId,
   pluginKey,
   isActive,
   isDisabled,
 }: {
-  tab: string;
+  tabId: string;
   pluginKey: string;
   isActive: boolean;
   isDisabled: boolean;
@@ -19,7 +19,7 @@ export function PluginCard({
 
   const toggleSwitch = useCallback(
     async (isActive: boolean) => {
-      let url = `api/tabs/${tab}/plugins/${pluginKey}/`;
+      let url = `api/tabs/${tabId}/plugins/${pluginKey}/`;
       if (isActive) url = url + "deactivate";
       else {
         url = url + "activate";
@@ -28,7 +28,7 @@ export function PluginCard({
       const data = await response.json();
       dispatch({ type: "SET_UPDATED_DATA", payload: data });
     },
-    [dispatch, pluginKey, tab]
+    [dispatch, pluginKey, tabId]
   );
 
   const handleChange = useCallback(() => {

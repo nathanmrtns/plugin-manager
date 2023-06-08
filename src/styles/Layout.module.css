@@ -5,6 +5,7 @@
 .sidebar {
   flex: 2;
   background-color: #f1f1f1;
+  height: 100vh;
 }
 
 .page {

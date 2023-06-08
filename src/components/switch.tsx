@@ -3,9 +3,11 @@ import styles from "@/styles/Switch.module.css";
 export default function Switch({
   checked,
   onClick,
+  showStatus = true,
 }: {
   checked: boolean;
   onClick: () => void;
+  showStatus: boolean;
 }) {
   return (
     <label className={styles.toggle}>
@@ -17,13 +19,15 @@ export default function Switch({
         readOnly
       />
       <div className={styles.toggleSwitch}></div>
-      <span
-        className={`${styles.toggleLabel} ${
-          checked ? styles.toggleLabelChecked : styles.toggleLabelBlocked
-        }`}
-      >
-        {checked ? "Allowed" : "Blocked"}
-      </span>
+      {showStatus && (
+        <span
+          className={`${styles.toggleLabel} ${
+            checked ? styles.toggleLabelChecked : styles.toggleLabelBlocked
+          }`}
+        >
+          {checked ? "Allowed" : "Blocked"}
+        </span>
+      )}
     </label>
   );
 }

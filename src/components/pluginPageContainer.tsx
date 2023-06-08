@@ -45,13 +45,7 @@ export default function PluginPageContainer({
           {loading ? (
             <Loader />
           ) : (
-            <PluginsList
-              tab={tab}
-              title={title}
-              active={tabData.active}
-              inactive={tabData.inactive}
-              disabled={tabData.disabled}
-            />
+            <PluginsList tab={tab} title={title} tabData={tabData} />
           )}
         </div>
       </main>

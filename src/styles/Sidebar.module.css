@@ -1,9 +1,12 @@
 .sidebar {
-  color: (--darkblue);
+  color: var(--darkblue);
+  --padding-left: 25px;
+  position: relative;
+  height: 100%;
 }
 
 .sidebarLogo {
-  padding-left: 25px;
+  padding-left: var(--padding-left);
   height: 100px;
   width: 100%;
   display: flex;
@@ -11,15 +14,27 @@
   flex-wrap: wrap;
 }
 
+.pluginsEnabled {
+  background: linear-gradient(to top, #98d9b4 0 1%, var(--grey) 5% 100%);
+}
+
+.pluginsDisabled {
+  background: linear-gradient(to top, #d88089a8 0 1%, var(--grey) 5% 100%);
+}
+
+.sidebarList {
+  background-color: #98d9b4;
+}
+
 .sidebarItem,
 .sidebarItem:visited {
-  color: #003349;
-  background-color: #f1f1f1;
+  color: var(--darkblue);
+  background-color: var(--grey);
   display: flex;
   align-items: center;
   height: 50px;
   line-height: 50px;
-  padding-left: 25px;
+  padding-left: var(--padding-left);
   text-decoration: none;
 }
 
@@ -31,4 +46,16 @@
   background-color: white;
   border-left: solid 5px var(--wine-red);
   padding-left: 20px;
+}
+
+.allPluginsToggle {
+  display: flex;
+  bottom: 30px;
+  font-size: 18px;
+  bottom: 30px;
+  position: absolute;
+  width: 100%;
+  padding: 0 20px;
+  justify-content: space-between;
+  align-items: center;
 }

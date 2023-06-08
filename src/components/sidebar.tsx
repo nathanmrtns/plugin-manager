@@ -9,20 +9,23 @@ import FinanceIcon from "@/components/icons/Finance";
 import { useGlobalContext } from "@/context/global";
 import { useCallback, useEffect, useState } from "react";
 import { Loader } from "./loader";
+import Switch from "./switch";
 
 function SidebarItem({
   title,
   icon,
   className,
   goTo,
+  onClick,
 }: {
   title: string;
   className?: string;
   icon: JSX.Element;
   goTo: string;
+  onClick: () => void;
 }) {
   return (
-    <li>
+    <li onClick={onClick}>
       <Link href={goTo} className={`${styles.sidebarItem} ${className}`}>
         {icon}
         <span>{title}</span>
@@ -31,10 +34,15 @@ function SidebarItem({
   );
 }
 
-function SidebarItemList() {
+function SidebarItemList({
+  handleTabChange,
+}: {
+  handleTabChange: (tabId: string) => void;
+}) {
   const pathname = usePathname();
-  const { state } = useGlobalContext();
+  const { state, dispatch } = useGlobalContext();
   const { tabs, tabdata } = state;
+  const [activeTab, setActiveTab] = useState(tabs.length ? tabs[0] : "");
 
   const sidebarIcons: { [key: string]: JSX.Element } = {
     "icon-marketing": <MarketingIcon />,
@@ -48,27 +56,42 @@ function SidebarItemList() {
     Personnel: "/personnel",
   };
 
+  const fetchTabs = useCallback(async () => {
+    const response = await fetch("/api/tabs");
+    const data = await response.json();
+    dispatch({ type: "SET_PLUGINS", payload: data });
+  }, [dispatch]);
+
+  useEffect(() => {
+    fetchTabs();
+  }, [fetchTabs, tabdata]);
+
   return (
-    <ul>
-      {tabs.map((tab: any, idx: number) => {
-        const tabPath = sidebarPaths[tabdata[tab].title];
-        return (
-          <SidebarItem
-            key={idx}
-            title={tabdata[tab].title}
-            icon={sidebarIcons[tabdata[tab].icon]}
-            className={pathname === tabPath ? `${styles.itemActive}` : ""}
-            goTo={tabPath}
-          />
-        );
-      })}
-    </ul>
+    <div className={styles.sidebarList}>
+      <ul>
+        {tabs.map((tab: string, idx: number) => {
+          const tabPath = sidebarPaths[tabdata[tab].title];
+          return (
+            <SidebarItem
+              key={idx}
+              title={tabdata[tab].title}
+              icon={sidebarIcons[tabdata[tab].icon]}
+              className={pathname === tabPath ? `${styles.itemActive}` : ""}
+              goTo={tabPath}
+              onClick={() => handleTabChange(tab)}
+            />
+          );
+        })}
+      </ul>
+    </div>
   );
 }
 
 export default function Sidebar() {
-  const { dispatch } = useGlobalContext();
+  const { state, dispatch } = useGlobalContext();
+  const { tabs, tabdata } = state;
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState(tabs.length ? tabs[0] : "");
 
   const fetchTabs = useCallback(async () => {
     setLoading(true);
@@ -82,12 +105,46 @@ export default function Sidebar() {
     fetchTabs();
   }, [fetchTabs]);
 
+  const isAllPluginsDisabled = tabdata[activeTab]?.allDisabled ?? false;
+
+  const handleTabChange = async (tab: string) => {
+    setActiveTab(tab);
+  };
+
+  const fetchDisablePlugins = useCallback(async () => {
+    const response = await fetch(
+      `/api/tabs/${activeTab}/plugins/set_all_state`,
+      {
+        method: "POST",
+        body: JSON.stringify({ state: !isAllPluginsDisabled }),
+      }
+    );
+    const data = await response.json();
+    dispatch({ type: "SET_TABDATA", payload: data });
+  }, [activeTab, dispatch, isAllPluginsDisabled]);
+
   return (
-    <div className={styles.sidebar}>
+    <div
+      className={`${styles.sidebar} ${
+        isAllPluginsDisabled ? styles.pluginsDisabled : styles.pluginsEnabled
+      }`}
+    >
       <div className={styles.sidebarLogo}>
         <DataGuardLogo />
       </div>
-      {loading ? <Loader /> : <SidebarItemList />}
+      {loading ? (
+        <Loader />
+      ) : (
+        <SidebarItemList handleTabChange={handleTabChange} />
+      )}
+      <div className={styles.allPluginsToggle}>
+        <span>All plugins {isAllPluginsDisabled ? "disabled" : "enabled"}</span>
+        <Switch
+          showStatus={false}
+          onClick={fetchDisablePlugins}
+          checked={!isAllPluginsDisabled}
+        />
+      </div>
     </div>
   );
 }
