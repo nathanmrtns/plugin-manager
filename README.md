@@ -16,7 +16,6 @@ Deployed option on: [https://plugin-manager-app.netlify.app](https://plugin-mana
 
 ---
 
-Missing features (passed the 4h limit):
+Needed improvements:
 
-- Disable all plugins in a tab
 - Better typing (get rid of the any types)
