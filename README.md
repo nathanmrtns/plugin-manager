@@ -16,6 +16,9 @@ Deployed option on: [https://plugin-manager-app.netlify.app](https://plugin-mana
 
 ---
 
-Needed improvements:
+Assummptions/Actions:
 
-- Better typing (get rid of the any types)
+- Disable/Enable all plugins: Disabling/Enabling all plugins from a tab doesn't change the
+  initial "disabled" state of a specific plugin.
+- tab ids don't change
+- Db schema shouldn't change the original format

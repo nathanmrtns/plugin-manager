@@ -10,6 +10,7 @@ import { useGlobalContext } from "@/context/global";
 import { useCallback, useEffect, useState } from "react";
 import { Loader } from "./loader";
 import Switch from "./switch";
+import { ApiFetchTabs } from "@/actions/apiActions";
 
 function SidebarItem({
   title,
@@ -40,9 +41,8 @@ function SidebarItemList({
   handleTabChange: (tabId: string) => void;
 }) {
   const pathname = usePathname();
-  const { state, dispatch } = useGlobalContext();
+  const { state } = useGlobalContext();
   const { tabs, tabdata } = state;
-  const [activeTab, setActiveTab] = useState(tabs.length ? tabs[0] : "");
 
   const sidebarIcons: { [key: string]: JSX.Element } = {
     "icon-marketing": <MarketingIcon />,
@@ -55,16 +55,6 @@ function SidebarItemList({
     Finance: "/finance",
     Personnel: "/personnel",
   };
-
-  const fetchTabs = useCallback(async () => {
-    const response = await fetch("/api/tabs");
-    const data = await response.json();
-    dispatch({ type: "SET_PLUGINS", payload: data });
-  }, [dispatch]);
-
-  useEffect(() => {
-    fetchTabs();
-  }, [fetchTabs, tabdata]);
 
   return (
     <div className={styles.sidebarList}>
@@ -91,12 +81,19 @@ export default function Sidebar() {
   const { state, dispatch } = useGlobalContext();
   const { tabs, tabdata } = state;
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState(tabs.length ? tabs[0] : "");
+  const pathname = usePathname();
+
+  const pathToTab: { [key: string]: string } = {
+    "/": "tab1",
+    "/finance": "tab2",
+    "/personnel": "tab3",
+  };
+
+  const [activeTab, setActiveTab] = useState(pathToTab[pathname] ?? "");
 
   const fetchTabs = useCallback(async () => {
     setLoading(true);
-    const response = await fetch("/api/tabs");
-    const data = await response.json();
+    const data = await ApiFetchTabs();
     dispatch({ type: "SET_TABS", payload: data });
     setLoading(false);
   }, [dispatch]);
@@ -106,7 +103,6 @@ export default function Sidebar() {
   }, [fetchTabs]);
 
   const isAllPluginsDisabled = tabdata[activeTab]?.allDisabled ?? false;
-
   const handleTabChange = async (tab: string) => {
     setActiveTab(tab);
   };
@@ -120,7 +116,7 @@ export default function Sidebar() {
       }
     );
     const data = await response.json();
-    dispatch({ type: "SET_TABDATA", payload: data });
+    dispatch({ type: "SET_UPDATED_DATA", payload: data });
   }, [activeTab, dispatch, isAllPluginsDisabled]);
 
   return (

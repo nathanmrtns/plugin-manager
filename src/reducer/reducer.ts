@@ -13,6 +13,7 @@ export const DEFAULT_DATA = {
 };
 
 export const reducer = (state: any, { type, payload }: ActionType) => {
+  console.log(type, payload);
   switch (type) {
     case "SET_TABS":
       return { ...state, ...payload };

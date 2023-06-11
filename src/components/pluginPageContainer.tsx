@@ -4,6 +4,7 @@ import PluginsList from "@/components/pluginList";
 import { useCallback, useEffect, useState } from "react";
 import { Loader } from "@/components/loader";
 import styles from "@/styles/Main.module.css";
+import { ApiFetchTabs } from "@/actions/apiActions";
 
 export default function PluginPageContainer({
   tab,
@@ -19,8 +20,7 @@ export default function PluginPageContainer({
 
   const fetchTabs = useCallback(async () => {
     setLoading(true);
-    const response = await fetch("/api/tabs");
-    const data = await response.json();
+    const data = await ApiFetchTabs();
     dispatch({ type: "SET_PLUGINS", payload: data });
     setLoading(false);
   }, [dispatch]);
@@ -45,7 +45,7 @@ export default function PluginPageContainer({
           {loading ? (
             <Loader />
           ) : (
-            <PluginsList tab={tab} title={title} tabData={tabData} />
+            <PluginsList tabId={tab} title={title} tabData={tabData} />
           )}
         </div>
       </main>

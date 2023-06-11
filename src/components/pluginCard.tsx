@@ -50,7 +50,7 @@ export function PluginCard({
         </span>
       </div>
       <div>
-        <Switch checked={isActive} onClick={handleChange} />
+        <Switch checked={isActive} onClick={handleChange} showStatus={true} />
       </div>
     </div>
   );

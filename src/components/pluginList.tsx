@@ -1,7 +1,15 @@
 import { PluginCard } from "./pluginCard";
 import styles from "@/styles/Plugins.module.css";
 
-export default function PluginsList({ title, tabId, tabData }: any) {
+export default function PluginsList({
+  title,
+  tabId,
+  tabData,
+}: {
+  title: string;
+  tabId: string;
+  tabData: any;
+}) {
   const { active, inactive, disabled, allDisabled } = tabData;
   const enabledPlugins = [...active, ...inactive, ...disabled].sort();
 
@@ -9,7 +17,7 @@ export default function PluginsList({ title, tabId, tabData }: any) {
     <div className={styles.plugins}>
       <h1 className={styles.title}>{title}</h1>
       <div className={styles.pluginsList}>
-        {enabledPlugins.map((pluginKey: any, idx: number) => {
+        {enabledPlugins.map((pluginKey: string, idx: number) => {
           const isActive = active.indexOf(pluginKey) >= 0;
           const isDisabled = disabled.indexOf(pluginKey) >= 0 || allDisabled;
 
